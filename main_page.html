@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Send Request</title>
+		<script src="js/script.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-section">
+				<h1>Send Request</h1>
+
+				<label for="urlInput">URL:</label>
+				<input
+					type="text"
+					id="urlInput"
+					value="https://catfact.ninja/fact"
+					placeholder="Enter URL"
+				/>
+
+				<label for="methodInput">Method:</label>
+				<input
+					type="text"
+					id="methodInput"
+					list="methods"
+					value="GET"
+					placeholder="Enter or Select Method"
+				/>
+				<datalist id="methods">
+					<option value="GET"></option>
+					<option value="POST"></option>
+					<option value="PUT"></option>
+					<option value="PATCH"></option>
+					<option value="DELETE"></option>
+				</datalist>
+
+				<label for="dataInput">Data (in JSON format):</label>
+				<textarea id="dataInput" placeholder="Enter Data">
+{ "key": "value" }</textarea
+				>
+
+				<label for="headersInput">Headers (in JSON format):</label>
+				<textarea id="headersInput" placeholder="Enter Headers">
+{ "Content-Type": "application/json" }</textarea
+				>
+
+				<button onclick="sendRequest()">Send</button>
+
+				<h2>Response:</h2>
+				<div id="responseOutput" class="status"></div>
+				<pre id="responseBody"></pre>
+			</div>
+
+			<div class="history-section">
+				<h2>Request History</h2>
+				<ul id="requestHistory"></ul>
+			</div>
+		</div>
+	</body>
+</html>

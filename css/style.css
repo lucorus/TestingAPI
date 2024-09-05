@@ -1,0 +1,139 @@
+body {
+	background-color: #2c2c2c;
+	color: #f1f1f1;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 20px;
+}
+
+h1,
+h2 {
+	color: #ff6f61;
+}
+
+label {
+	display: block;
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+input[type='text'],
+textarea,
+select {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	background-color: #444;
+	border: 1px solid #666;
+	border-radius: 4px;
+	color: #fff;
+	box-sizing: border-box;
+}
+
+textarea {
+	resize: vertical;
+	height: 100px;
+}
+
+button {
+	margin-top: 20px;
+	padding: 10px 20px;
+	background-color: #ff6f61;
+	border: none;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #ff5a4a;
+}
+
+pre {
+	background-color: #333;
+	padding: 15px;
+	border-radius: 4px;
+	white-space: pre-wrap;
+}
+
+.status {
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.status.info {
+	color: #2196f3;
+}
+
+.status.redirect {
+	color: #ffeb3b;
+}
+
+.status.success {
+	color: #4caf50;
+}
+
+.status.client-error {
+	color: #ff9800;
+}
+
+.status.server-error {
+	color: #f44336;
+}
+
+.status.special-info {
+	color: #03a9f4;
+	font-style: italic;
+}
+
+.status.special-redirect {
+	color: #ffc107;
+	font-style: italic;
+}
+
+.container {
+	display: flex;
+	gap: 20px;
+}
+
+.form-section {
+	flex: 3;
+}
+
+.history-section {
+	flex: 1;
+	background-color: #333;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	background-color: #444;
+	margin-bottom: 5px;
+	padding: 10px;
+	border-radius: 4px;
+	color: #fff;
+	cursor: pointer;
+}
+
+li:hover {
+	background-color: #555;
+}
+
+.details {
+	display: none;
+	background-color: #222;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+.details pre {
+	margin: 0;
+	background-color: #333;
+}
