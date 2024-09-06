@@ -1,7 +1,6 @@
 const port = 8081
 const domain = 'localhost'
 
-
 function getStatusDescription(status) {
 	switch (status) {
 		// Informational responses
@@ -12,20 +11,17 @@ function getStatusDescription(status) {
 			}
 		case 101:
 			return {
-				message:
-					'Switching Protocols - Сервер переключается на другой протокол по запросу клиента.',
+				message: 'Switching Protocols - Сервер переключается на другой протокол по запросу клиента.',
 				className: 'info',
 			}
 		case 102:
 			return {
-				message:
-					'Processing - Сервер принял запрос, но обработка не завершена.',
+				message: 'Processing - Сервер принял запрос, но обработка не завершена.',
 				className: 'info',
 			}
 		case 103:
 			return {
-				message:
-					'Early Hints - Сервер готов отправить заголовки ответа до того, как весь запрос будет завершен.',
+				message: 'Early Hints - Сервер готов отправить заголовки ответа до того, как весь запрос будет завершен.',
 				className: 'info',
 			}
 		// Success responses
@@ -46,20 +42,17 @@ function getStatusDescription(status) {
 			}
 		case 203:
 			return {
-				message:
-					'Non-Authoritative Information - Ответ содержит измененные данные с сервера-посредника.',
+				message: 'Non-Authoritative Information - Ответ содержит измененные данные с сервера-посредника.',
 				className: 'success',
 			}
 		case 204:
 			return {
-				message:
-					'No Content - Запрос выполнен успешно, но нет содержимого для возврата.',
+				message: 'No Content - Запрос выполнен успешно, но нет содержимого для возврата.',
 				className: 'success',
 			}
 		case 205:
 			return {
-				message:
-					'Reset Content - Запрос выполнен успешно, и клиенту нужно сбросить форму отправки.',
+				message: 'Reset Content - Запрос выполнен успешно, и клиенту нужно сбросить форму отправки.',
 				className: 'success',
 			}
 		case 206:
@@ -70,21 +63,18 @@ function getStatusDescription(status) {
 			}
 		case 207:
 			return {
-				message:
-					'Multi-Status - Тело ответа передает информацию о нескольких статусах для разных операций.',
+				message: 'Multi-Status - Тело ответа передает информацию о нескольких статусах для разных операций.',
 				className: 'success',
 			}
 		case 208:
 			return {
-				message:
-					'Already Reported - Результаты уже были сообщены в предыдущем ответе на запрос.',
+				message: 'Already Reported - Результаты уже были сообщены в предыдущем ответе на запрос.',
 				className: 'success',
 			}
 		// Redirection messages
 		case 300:
 			return {
-				message:
-					'Multiple Choices - Запрос может быть выполнен несколькими способами.',
+				message: 'Multiple Choices - Запрос может быть выполнен несколькими способами.',
 				className: 'special-redirect',
 			}
 		case 301:
@@ -99,45 +89,38 @@ function getStatusDescription(status) {
 			}
 		case 303:
 			return {
-				message:
-					'See Other - Клиент должен использовать другой URI для получения ресурса.',
+				message: 'See Other - Клиент должен использовать другой URI для получения ресурса.',
 				className: 'redirect',
 			}
 		case 304:
 			return {
-				message:
-					'Not Modified - Данные не изменились, загружать их повторно не нужно.',
+				message: 'Not Modified - Данные не изменились, загружать их повторно не нужно.',
 				className: 'redirect',
 			}
 		case 305:
 			return {
-				message:
-					'Use Proxy - Доступ к запрашиваемому ресурсу должен осуществляться через прокси.',
+				message: 'Use Proxy - Доступ к запрашиваемому ресурсу должен осуществляться через прокси.',
 				className: 'redirect',
 			}
 		case 306:
 			return {
-				message:
-					'Reserved - Код ранее использовался, но сейчас зарезервирован и не должен использоваться.',
+				message: 'Reserved - Код ранее использовался, но сейчас зарезервирован и не должен использоваться.',
 				className: 'redirect',
 			}
 		case 307:
 			return {
-				message:
-					'Temporary Redirect - Клиент должен повторить запрос по другому URL временно.',
+				message: 'Temporary Redirect - Клиент должен повторить запрос по другому URL временно.',
 				className: 'redirect',
 			}
 		case 308:
 			return {
-				message:
-					'Permanent Redirect - Клиент должен использовать новый URL для будущих запросов к этому ресурсу.',
+				message: 'Permanent Redirect - Клиент должен использовать новый URL для будущих запросов к этому ресурсу.',
 				className: 'redirect',
 			}
 		// Client error responses
 		case 400:
 			return {
-				message:
-					'Bad Request - Некорректный запрос. Возможно, отсутствуют необходимые параметры.',
+				message: 'Bad Request - Некорректный запрос. Возможно, отсутствуют необходимые параметры.',
 				className: 'client-error',
 			}
 		case 401:
@@ -154,8 +137,7 @@ function getStatusDescription(status) {
 			}
 		case 403:
 			return {
-				message:
-					'Forbidden - Доступ запрещен. Аутентификация выполнена, но у пользователя нет прав доступа.',
+				message: 'Forbidden - Доступ запрещен. Аутентификация выполнена, но у пользователя нет прав доступа.',
 				className: 'client-error',
 			}
 		case 404:
@@ -165,32 +147,27 @@ function getStatusDescription(status) {
 			}
 		case 405:
 			return {
-				message:
-					'Method Not Allowed - Метод запроса не поддерживается для данного ресурса.',
+				message: 'Method Not Allowed - Метод запроса не поддерживается для данного ресурса.',
 				className: 'client-error',
 			}
 		case 406:
 			return {
-				message:
-					'Not Acceptable - Запрашиваемый ресурс не может быть предоставлен в приемлемом формате.',
+				message: 'Not Acceptable - Запрашиваемый ресурс не может быть предоставлен в приемлемом формате.',
 				className: 'client-error',
 			}
 		case 407:
 			return {
-				message:
-					'Proxy Authentication Required - Требуется аутентификация через прокси.',
+				message: 'Proxy Authentication Required - Требуется аутентификация через прокси.',
 				className: 'client-error',
 			}
 		case 408:
 			return {
-				message:
-					'Request Timeout - Сервер не дождался завершения запроса от клиента.',
+				message: 'Request Timeout - Сервер не дождался завершения запроса от клиента.',
 				className: 'client-error',
 			}
 		case 409:
 			return {
-				message:
-					'Conflict - Конфликт в запросе, например, конфликт версий данных.',
+				message: 'Conflict - Конфликт в запросе, например, конфликт версий данных.',
 				className: 'client-error',
 			}
 		case 410:
@@ -200,38 +177,32 @@ function getStatusDescription(status) {
 			}
 		case 411:
 			return {
-				message:
-					'Length Required - Необходимо указать длину тела запроса для его обработки.',
+				message: 'Length Required - Необходимо указать длину тела запроса для его обработки.',
 				className: 'client-error',
 			}
 		case 412:
 			return {
-				message:
-					'Precondition Failed - Предусловия в заголовке запроса не выполнены.',
+				message: 'Precondition Failed - Предусловия в заголовке запроса не выполнены.',
 				className: 'client-error',
 			}
 		case 413:
 			return {
-				message:
-					'Payload Too Large - Тело запроса превышает максимально допустимый размер.',
+				message: 'Payload Too Large - Тело запроса превышает максимально допустимый размер.',
 				className: 'client-error',
 			}
 		case 414:
 			return {
-				message:
-					'URI Too Long - Запрашиваемый URI слишком длинный для обработки сервером.',
+				message: 'URI Too Long - Запрашиваемый URI слишком длинный для обработки сервером.',
 				className: 'client-error',
 			}
 		case 415:
 			return {
-				message:
-					'Unsupported Media Type - Тип данных запроса не поддерживается сервером.',
+				message: 'Unsupported Media Type - Тип данных запроса не поддерживается сервером.',
 				className: 'client-error',
 			}
 		case 416:
 			return {
-				message:
-					'Range Not Satisfiable - Запрашиваемый диапазон данных не может быть удовлетворен.',
+				message: 'Range Not Satisfiable - Запрашиваемый диапазон данных не может быть удовлетворен.',
 				className: 'client-error',
 			}
 		case 417:
@@ -248,8 +219,7 @@ function getStatusDescription(status) {
 			}
 		case 421:
 			return {
-				message:
-					'Misdirected Request - Запрос был направлен на сервер, который не может дать ответ.',
+				message: 'Misdirected Request - Запрос был направлен на сервер, который не может дать ответ.',
 				className: 'client-error',
 			}
 		case 422:
@@ -265,38 +235,32 @@ function getStatusDescription(status) {
 			}
 		case 424:
 			return {
-				message:
-					'Failed Dependency - Запрос не выполнен из-за сбоя в предыдущем запросе, от которого он зависит.',
+				message: 'Failed Dependency - Запрос не выполнен из-за сбоя в предыдущем запросе, от которого он зависит.',
 				className: 'client-error',
 			}
 		case 425:
 			return {
-				message:
-					'Too Early - Сервер не готов обработать запрос из-за возможных последующих запросов.',
+				message: 'Too Early - Сервер не готов обработать запрос из-за возможных последующих запросов.',
 				className: 'client-error',
 			}
 		case 426:
 			return {
-				message:
-					'Upgrade Required - Клиент должен переключиться на другой протокол для завершения запроса.',
+				message: 'Upgrade Required - Клиент должен переключиться на другой протокол для завершения запроса.',
 				className: 'client-error',
 			}
 		case 428:
 			return {
-				message:
-					'Precondition Required - Сервер требует, чтобы запрос включал предусловие.',
+				message: 'Precondition Required - Сервер требует, чтобы запрос включал предусловие.',
 				className: 'client-error',
 			}
 		case 429:
 			return {
-				message:
-					'Too Many Requests - Клиент отправил слишком много запросов за короткий промежуток времени.',
+				message: 'Too Many Requests - Клиент отправил слишком много запросов за короткий промежуток времени.',
 				className: 'client-error',
 			}
 		case 431:
 			return {
-				message:
-					'Request Header Fields Too Large - Поля заголовка запроса слишком велики для обработки сервером.',
+				message: 'Request Header Fields Too Large - Поля заголовка запроса слишком велики для обработки сервером.',
 				className: 'client-error',
 			}
 		// Server error responses
@@ -307,8 +271,7 @@ function getStatusDescription(status) {
 			}
 		case 501:
 			return {
-				message:
-					'Not Implemented - Сервер не поддерживает функциональность, необходимую для обработки запроса.',
+				message: 'Not Implemented - Сервер не поддерживает функциональность, необходимую для обработки запроса.',
 				className: 'server-error',
 			}
 		case 502:
@@ -324,14 +287,12 @@ function getStatusDescription(status) {
 			}
 		case 504:
 			return {
-				message:
-					'Gateway Timeout - Сервер не дождался ответа от вышестоящего сервера в установленное время.',
+				message: 'Gateway Timeout - Сервер не дождался ответа от вышестоящего сервера в установленное время.',
 				className: 'server-error',
 			}
 		case 505:
 			return {
-				message:
-					'HTTP Version Not Supported - Сервер не поддерживает указанную в запросе версию протокола HTTP.',
+				message: 'HTTP Version Not Supported - Сервер не поддерживает указанную в запросе версию протокола HTTP.',
 				className: 'server-error',
 			}
 		case 506:
@@ -342,26 +303,22 @@ function getStatusDescription(status) {
 			}
 		case 507:
 			return {
-				message:
-					'Insufficient Storage - Сервер не может завершить запрос из-за нехватки памяти для обработки.',
+				message: 'Insufficient Storage - Сервер не может завершить запрос из-за нехватки памяти для обработки.',
 				className: 'server-error',
 			}
 		case 508:
 			return {
-				message:
-					'Loop Detected - Сервер обнаружил бесконечный цикл при обработке запроса.',
+				message: 'Loop Detected - Сервер обнаружил бесконечный цикл при обработке запроса.',
 				className: 'server-error',
 			}
 		case 510:
 			return {
-				message:
-					'Not Extended - Сервер требует дальнейшего расширения запроса для его обработки.',
+				message: 'Not Extended - Сервер требует дальнейшего расширения запроса для его обработки.',
 				className: 'server-error',
 			}
 		case 511:
 			return {
-				message:
-					'Network Authentication Required - Клиент должен пройти аутентификацию в сети для получения доступа.',
+				message: 'Network Authentication Required - Клиент должен пройти аутентификацию в сети для получения доступа.',
 				className: 'server-error',
 			}
 		default:
@@ -392,16 +349,13 @@ function sendRequest() {
 			statusElement.textContent = `Status: ${data.status} - ${statusInfo.message}`
 			statusElement.className = `status ${statusInfo.className}`
 
-			document.getElementById('responseBody').textContent = JSON.stringify(
-				data.body,
-				null,
-				2
-			).replace(/\\/g, '')
+			document.getElementById('responseBody').textContent = JSON.stringify(data.body, null, 2).replace(/\\/g, '')
 
 			addToHistory(payload, data)
 		})
 		.catch(error => {
-			document.getElementById('responseOutput').textContent = 'Error: ' + error
+			document.getElementById('responseOutput').textContent = ''
+			document.getElementById('responseBody').textContent = 'Error sending request'
 		})
 }
 
@@ -409,31 +363,42 @@ function addToHistory(payload, response) {
 	const historyList = document.getElementById('requestHistory')
 
 	const listItem = document.createElement('li')
+	listItem.style.position = 'relative'
+
 	listItem.innerHTML = `
-        <strong>URL:</strong> ${payload.url}<br>
-        <strong>Method:</strong> ${payload.method}<br>
-        <strong>Status Code:</strong> ${response.status}
-        <div class="details">
-            <strong>Data:</strong> <pre>${convertToJsonString(
-							payload.data
-						)}</pre><br>
-            <strong>Headers:</strong> <pre>${convertToJsonString(
-							payload.headers
-						)}</pre><br>
-            <strong>Response:</strong> <pre>${JSON.stringify(
-							response.body,
-							null,
-							2
-						).replace(/\\/g, '')}</pre>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong>URL:</strong> ${payload.url}<br>
+                <strong>Method:</strong> ${payload.method}<br>
+                <strong>Status Code:</strong> ${response.status}
+            </div>
+            <button class="delete-btn" style="background-color: transparent; color: #ff6f61; border: none; cursor: pointer; position: absolute; top: 0; right: 0; padding: 5px; display: none;">✖</button>
+        </div>
+        <div class="details" style="display: none;">
+            <strong>Data:</strong> <pre>${convertToJsonString(payload.data)}</pre><br>
+            <strong>Headers:</strong> <pre>${convertToJsonString(payload.headers)}</pre><br>
+            <strong>Response:</strong> <pre>${JSON.stringify(response.body, null, 2).replace(/\\/g, '')}</pre>
         </div>
     `
+
 	listItem.addEventListener('click', () => {
 		const details = listItem.querySelector('.details')
-		details.style.display =
-			details.style.display === 'none' || details.style.display === ''
-				? 'block'
-				: 'none'
+		details.style.display = details.style.display === 'none' || details.style.display === '' ? 'block' : 'none'
 	})
+
+	const deleteBtn = listItem.querySelector('.delete-btn')
+	deleteBtn.addEventListener('click', e => {
+		e.stopPropagation()
+		historyList.removeChild(listItem)
+	})
+
+	listItem.addEventListener('mouseenter', () => {
+		deleteBtn.style.display = 'inline'
+	})
+	listItem.addEventListener('mouseleave', () => {
+		deleteBtn.style.display = 'none'
+	})
+
 	historyList.appendChild(listItem)
 }
 

@@ -13,21 +13,10 @@
 				<h1>Send Request</h1>
 
 				<label for="urlInput">URL:</label>
-				<input
-					type="text"
-					id="urlInput"
-					value="https://catfact.ninja/fact"
-					placeholder="Enter URL"
-				/>
+				<input type="text" id="urlInput" value="https://catfact.ninja/fact" placeholder="Enter URL" />
 
 				<label for="methodInput">Method:</label>
-				<input
-					type="text"
-					id="methodInput"
-					list="methods"
-					value="GET"
-					placeholder="Enter or Select Method"
-				/>
+				<input type="text" id="methodInput" list="methods" value="GET" placeholder="Enter or Select Method" />
 				<datalist id="methods">
 					<option value="GET"></option>
 					<option value="POST"></option>
@@ -37,14 +26,10 @@
 				</datalist>
 
 				<label for="dataInput">Data (in JSON format):</label>
-				<textarea id="dataInput" placeholder="Enter Data">
-{ "key": "value" }</textarea
-				>
+				<textarea id="dataInput" placeholder="Enter Data">{ "key": "value" }</textarea>
 
 				<label for="headersInput">Headers (in JSON format):</label>
-				<textarea id="headersInput" placeholder="Enter Headers">
-{ "Content-Type": "application/json" }</textarea
-				>
+				<textarea id="headersInput" placeholder="Enter Headers">{ "Content-Type": "application/json" }</textarea>
 
 				<button onclick="sendRequest()">Send</button>
 

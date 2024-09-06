@@ -12,23 +12,33 @@ import (
 )
 
 const (
-  PathToConfigFile = "data.json"
+  PathToConfigFile = "config.json"
   PathToJsFile = "js/script.js"
+  PathToMainPageFile = "templates/main_page.html"
+  PathToJsDir = "/js/"
+  PathToCssDir = "/css/"
 )
+
 
 // Функция для обработки запросов на главную страницу
 func mainPageHandler(w http.ResponseWriter, r *http.Request) {
-    tmpl, err := template.ParseFiles("main_page.html")
-    if err != nil {
-        http.Error(w, "Unable to load template", http.StatusInternalServerError)
-        return
-    }
+  if r.Method != http.MethodGet {
+    http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+    return
+  }
 
-    err = tmpl.Execute(w, nil)
-    if err != nil {
-        http.Error(w, "Error rendering template", http.StatusInternalServerError)
-    }
+  tmpl, err := template.ParseFiles(PathToMainPageFile)
+  if err != nil {
+    http.Error(w, "Unable to load template", http.StatusInternalServerError)
+    return
+  }
+
+  err = tmpl.Execute(w, nil)
+  if err != nil {
+    http.Error(w, "Error rendering template", http.StatusInternalServerError)
+  }
 }
+
 
 // Функция для обработки запросов на /send_request/
 func sendRequestHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,15 +49,15 @@ func sendRequestHandler(w http.ResponseWriter, r *http.Request) {
 
   body, err := ioutil.ReadAll(r.Body)
   if err != nil {
-      http.Error(w, "Unable to read request body", http.StatusBadRequest)
-      return
+    http.Error(w, "Unable to read request body", http.StatusBadRequest)
+    return
   }
   defer r.Body.Close()
 
   var payload RequestPayload
   if err := json.Unmarshal(body, &payload); err != nil {
-      http.Error(w, "Invalid JSON", http.StatusBadRequest)
-      return
+    http.Error(w, "Invalid JSON", http.StatusBadRequest)
+    return
 	}
 
   statusCode, responseBody, err := SendRequest(payload.URL, payload.Method, payload.Data, payload.Headers)
@@ -58,20 +68,21 @@ func sendRequestHandler(w http.ResponseWriter, r *http.Request) {
   response := map[string]interface{}{
     "status": statusCode,
     "body":   responseBody,
-		"error": err,
+		"error":  err,
   }
 	
   w.Header().Set("Content-Type", "application/json")
   json.NewEncoder(w).Encode(response)
 }
 
-// структура запроса
+
 type RequestPayload struct {
   URL     string                 `json:"url"`
   Method  string                 `json:"method"`
   Data    map[string]interface{} `json:"data"`
   Headers map[string]string      `json:"headers"`
 }
+
 
 // посылает запрос с указанными данными
 func SendRequest(url, method string, data map[string]interface{}, headers map[string]string) (int, string, error) {
@@ -104,42 +115,27 @@ func SendRequest(url, method string, data map[string]interface{}, headers map[st
   return resp.StatusCode, string(body), nil
 }
 
-// получает порт, на котором будет запущен сервер
-func GetPort(filename string) (string, error) {
+
+// получает порт и домен из конфига
+func GetConfigData(filename string) (string, string, error) {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
-		return "", err
+		return "", "", err
 	}
 	defer jsonFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	data := struct{Port string `json:"port"`}{}
+	data := struct{Port string `json:"port"`; Domain string `json:"domain"`}{}
 	json.Unmarshal(byteValue, &data)
 
-	return data.Port, nil
+	return data.Port, data.Domain, nil
 }
 
-// получает порт, на котором будет запущен сервер
-func GetDomain(filename string) (string, error) {
-	jsonFile, err := os.Open(filename)
-	if err != nil {
-		fmt.Println(err)
-		return "", err
-	}
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-
-	data := struct{Domain string `json:"domain"`}{}
-	json.Unmarshal(byteValue, &data)
-
-	return data.Domain, nil
-}
 
 // записывает инфу из конфига в js файл
-func writeToFile(filename string, constant_info string) error {
+func WriteInfoToFile(filename, line1, line2 string) error {
 	file, err := os.Open(filename)
 	if err != nil {
 		return err
@@ -152,8 +148,8 @@ func writeToFile(filename string, constant_info string) error {
 	}
 
 	lines := strings.Split(string(content), "\n")
-	lines[0] = constant_info
-  lines[1] = ""
+	lines[0] = line1
+  lines[1] = line2
 	newContent := strings.Join(lines, "\n")
 
 	err = ioutil.WriteFile(filename, []byte(newContent), 0644)
@@ -164,25 +160,20 @@ func writeToFile(filename string, constant_info string) error {
 	return nil
 }
 
+
 func main() {
   http.HandleFunc("/", mainPageHandler)
   http.HandleFunc("/send_request/", sendRequestHandler)
-	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./js"))))
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))
+	http.Handle("/js/", http.StripPrefix(PathToJsDir, http.FileServer(http.Dir("./js"))))
+	http.Handle("/css/", http.StripPrefix(PathToCssDir, http.FileServer(http.Dir("./css"))))
 
-	port, err := GetPort(PathToConfigFile)
-	if err != nil {
-		fmt.Println("Error by receiving the port: " + err.Error())
-		return
-	}
-
-  domain, err := GetDomain(PathToConfigFile)
+  port, domain, err := GetConfigData(PathToConfigFile)
   if err != nil {
-    fmt.Println("Error receiving the domain: " + err.Error())
+    fmt.Println("Error in getting config info: ", err.Error())
     return
   }
 
-  err = writeToFile(PathToJsFile, "const port = " + port + "\nconst domain = '" + domain + "'")
+  err = WriteInfoToFile(PathToJsFile, "const port = " + port, "const domain = '" + domain + "'")
   if err != nil {
     fmt.Println("Error in writing config info in file: " + err.Error())
     return
