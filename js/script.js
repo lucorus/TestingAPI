@@ -351,7 +351,8 @@ function sendRequest() {
 			statusElement.className = `status ${statusInfo.className}`
 
 			const responseBodyElement = document.getElementById('responseBody')
-			responseBodyElement.innerHTML = makeLinksClickable(JSON.stringify(data.body, null, 2).replace(/\\/g, ''))
+			const formattedData = formatJson(data.body) // <--- updated
+			responseBodyElement.innerHTML = makeLinksClickable(formattedData)
 
 			addToHistory(payload, data)
 		})
@@ -359,6 +360,20 @@ function sendRequest() {
 			document.getElementById('responseOutput').textContent = ''
 			document.getElementById('responseBody').textContent = 'Error sending request'
 		})
+}
+
+function formatJson(obj, indent = '') {
+	let result = ''
+	if (typeof obj === 'object') {
+		result += '{\n'
+		for (const key in obj) {
+			result += `${indent}  "${key}": ${formatJson(obj[key], indent + '  ')}\n`
+		}
+		result += `${indent}}`
+	} else {
+		result = obj.toString()
+	}
+	return result
 }
 
 function addToHistory(payload, response) {
@@ -377,11 +392,9 @@ function addToHistory(payload, response) {
             <button class="delete-btn" style="background-color: transparent; color: #ff6f61; border: none; cursor: pointer; position: absolute; top: 0; right: 0; padding: 5px; display: none;">✖</button>
         </div>
         <div class="details" style="display: none;">
-            <strong>Data:</strong> <pre>${convertToJsonString(payload.data)}</pre><br>
-            <strong>Headers:</strong> <pre>${convertToJsonString(payload.headers)}</pre><br>
-            <strong>Response:</strong> <pre>${makeLinksClickable(
-							JSON.stringify(response.body, null, 2).replace(/\\/g, '')
-						)}</pre>
+            <strong>Data:</strong> <pre>${formatJson(payload.data)}</pre><br>
+            <strong>Headers:</strong> <pre>${formatJson(payload.headers)}</pre><br>
+            <strong>Response:</strong> <pre>${makeLinksClickable(formatJson(response.body))}</pre>
         </div>
     `
 
