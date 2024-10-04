@@ -346,10 +346,12 @@ function sendRequest() {
 		.then(data => {
 			const statusInfo = getStatusDescription(data.status)
 			const statusElement = document.getElementById('responseOutput')
-			statusElement.textContent = `Status: ${data.status} - ${statusInfo.message}`
+			const responseText = `Status: ${data.status} - ${statusInfo.message}`
+			statusElement.innerHTML = makeLinksClickable(responseText)
 			statusElement.className = `status ${statusInfo.className}`
 
-			document.getElementById('responseBody').textContent = JSON.stringify(data.body, null, 2).replace(/\\/g, '')
+			const responseBodyElement = document.getElementById('responseBody')
+			responseBodyElement.innerHTML = makeLinksClickable(JSON.stringify(data.body, null, 2).replace(/\\/g, ''))
 
 			addToHistory(payload, data)
 		})
@@ -377,7 +379,9 @@ function addToHistory(payload, response) {
         <div class="details" style="display: none;">
             <strong>Data:</strong> <pre>${convertToJsonString(payload.data)}</pre><br>
             <strong>Headers:</strong> <pre>${convertToJsonString(payload.headers)}</pre><br>
-            <strong>Response:</strong> <pre>${JSON.stringify(response.body, null, 2).replace(/\\/g, '')}</pre>
+            <strong>Response:</strong> <pre>${makeLinksClickable(
+							JSON.stringify(response.body, null, 2).replace(/\\/g, '')
+						)}</pre>
         </div>
     `
 
@@ -400,6 +404,13 @@ function addToHistory(payload, response) {
 	})
 
 	historyList.appendChild(listItem)
+}
+
+function makeLinksClickable(text) {
+	const urlRegex = /(https?:\/\/[^\s]+)/g
+	return text.replace(urlRegex, url => {
+		return `<a href="${url}" target="_blank">${url}</a>`
+	})
 }
 
 function convertToJsonString(input) {
