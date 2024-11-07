@@ -117,7 +117,7 @@ func SendRequest(url, method string, data map[string]interface{}, headers map[st
 
 
 // получает порт и домен из конфига
-func GetConfigData(filename string) (string, string, error) {
+func GetData(filename string) (string, string, error) {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		fmt.Println(err)
@@ -134,25 +134,61 @@ func GetConfigData(filename string) (string, string, error) {
 }
 
 
-// записывает инфу из конфига в js файл
-func WriteInfoToFile(filename, line1, line2 string) error {
-	file, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
+type Config struct {
+	Settings map[string]string
+}
 
-	content, err := ioutil.ReadAll(file)
+// Получает данные конфигурации из JSON файла
+func GetConfigData(filename string) (Config, error) {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		return Config{}, err
+	}
+	defer jsonFile.Close()
+
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		return Config{}, err
+	}
+
+	var settings map[string]string
+	if err := json.Unmarshal(byteValue, &settings); err != nil {
+		return Config{}, err
+	}
+
+	return Config{Settings: settings}, nil
+}
+
+
+// Создает строки конфигурации для js файла
+func CreateJSContent(config Config) string {
+	jsContent := ""
+
+	for key, value := range config.Settings {
+		jsContent += fmt.Sprintf("const %s = '%s';\n", key, value)
+	}
+
+	return jsContent
+}
+
+
+// Заменяет предыдущую конфигурацию js файла
+func ReplaceConfigData(filename string, newLines string, n int) error {
+	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return err
 	}
 
 	lines := strings.Split(string(content), "\n")
-	lines[0] = line1
-  lines[1] = line2
-	newContent := strings.Join(lines, "\n")
 
-	err = ioutil.WriteFile(filename, []byte(newContent), 0644)
+	if len(lines) > n {
+		lines = append([]string{newLines}, lines[n:]...)
+	} else {
+		lines = append([]string{newLines}, lines...)
+	}
+
+	// Записываем обновленное содержимое обратно в файл
+	err = ioutil.WriteFile(filename, []byte(strings.Join(lines, "\n")), 0644)
 	if err != nil {
 		return err
 	}
@@ -167,17 +203,29 @@ func main() {
 	http.Handle("/js/", http.StripPrefix(PathToJsDir, http.FileServer(http.Dir("./js"))))
 	http.Handle("/css/", http.StripPrefix(PathToCssDir, http.FileServer(http.Dir("./css"))))
 
-  port, domain, err := GetConfigData(PathToConfigFile)
+  port, domain, err := GetData(PathToConfigFile)
   if err != nil {
     fmt.Println("Error in getting config info: ", err.Error())
     return
   }
 
-  err = WriteInfoToFile(PathToJsFile, "const port = " + port, "const domain = '" + domain + "'")
-  if err != nil {
-    fmt.Println("Error in writing config info in file: " + err.Error())
-    return
-  }
+  config, err := GetConfigData("config.json")
+	if err != nil {
+		fmt.Println("Ошибка при получении данных конфигурации:", err)
+		return
+	}
+
+	// Создаем новый контент для JS файла
+	newContent := CreateJSContent(config)
+
+	// Удаляем прошлые константы
+	err = ReplaceConfigData(PathToJsFile, newContent, 19)
+	if err != nil {
+		fmt.Println("Ошибка при обновлении конфигурации", err)
+		return
+	}
+
+	fmt.Println("Конфигурация успешно обновлена!")
 
   fmt.Println("Server started at " + domain + ":" + port)
   http.ListenAndServe(domain + ":" + port, nil)

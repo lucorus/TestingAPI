@@ -1,5 +1,86 @@
-const port = 8081
-const domain = 'localhost'
+const statusInfoColor = '#2196f3';
+const statusRedirectColor = '#ffeb3b';
+const statusSpecialInfoColor = '#03a9f4';
+const textColor = '#f1f1f1';
+const headerColor = '#ff6f61';
+const inputBgColor = '#444';
+const inputTextColor = '#fff';
+const domain = 'localhost';
+const buttonHoverColor = '#ff5a4a';
+const inputBorderColor = '#666';
+const statusClientErrorColor = '#ff9800';
+const port = '8081';
+const buttonBgColor = '#ff6f61';
+const listItemHoverColor = '#555';
+const statusServerErrorColor = '#f44336';
+const statusSpecialRedirectColor = '#ffc107';
+const bodyBgColor = '#2c2c2c';
+const listItemBgColor = '#444';
+const statusSuccessColor = '#4caf50';
+
+
+
+function changeColors() {
+	// Изменяем цвета элементов на странице
+	document.body.style.backgroundColor = bodyBgColor
+	document.body.style.color = textColor
+
+	const headers = document.querySelectorAll('h1, h2')
+	headers.forEach(header => {
+		header.style.color = headerColor
+	})
+
+	const buttons = document.querySelectorAll('button')
+	buttons.forEach(button => {
+		button.style.backgroundColor = buttonBgColor
+		button.onmouseover = function () {
+			this.style.backgroundColor = buttonHoverColor
+		}
+		button.onmouseout = function () {
+			this.style.backgroundColor = buttonBgColor
+		}
+	})
+
+	const inputs = document.querySelectorAll('input[type="text"], textarea, select')
+	inputs.forEach(input => {
+		input.style.backgroundColor = inputBgColor
+		input.style.borderColor = inputBorderColor
+		input.style.color = inputTextColor
+	})
+
+	const listItems = document.querySelectorAll('li')
+	listItems.forEach(item => {
+		item.style.backgroundColor = listItemBgColor
+		item.onmouseover = function () {
+			this.style.backgroundColor = listItemHoverColor
+		}
+		item.onmouseout = function () {
+			this.style.backgroundColor = listItemBgColor
+		}
+	})
+
+	const statusElements = document.querySelectorAll('.status')
+	statusElements.forEach(status => {
+		if (status.classList.contains('info')) {
+			status.style.color = statusInfoColor
+		} else if (status.classList.contains('redirect')) {
+			status.style.color = statusRedirectColor
+		} else if (status.classList.contains('success')) {
+			status.style.color = statusSuccessColor
+		} else if (status.classList.contains('client-error')) {
+			status.style.color = statusClientErrorColor
+		} else if (status.classList.contains('server-error')) {
+			status.style.color = statusServerErrorColor
+		} else if (status.classList.contains('special-info')) {
+			status.style.color = statusSpecialInfoColor
+		} else if (status.classList.contains('special-redirect')) {
+			status.style.color = statusSpecialRedirectColor
+		}
+	})
+}
+
+// Вызываем функцию при загрузке страницы с установкой цветов по умолчанию
+window.onload = () => changeColors()
 
 function getStatusDescription(status) {
 	switch (status) {
@@ -351,7 +432,7 @@ function sendRequest() {
 			statusElement.className = `status ${statusInfo.className}`
 
 			const responseBodyElement = document.getElementById('responseBody')
-			const formattedData = formatJson(data.body) // <--- updated
+			const formattedData = formatJson(data.body)
 			responseBodyElement.innerHTML = makeLinksClickable(formattedData)
 
 			addToHistory(payload, data)

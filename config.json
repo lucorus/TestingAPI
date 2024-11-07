@@ -1,4 +1,27 @@
 {
 	"port": "8081",
-	"domain": "localhost"
+	"domain": "localhost",
+
+	"bodyBgColor": "#2c2c2c",
+
+	"textColor": "#f1f1f1",
+	"headerColor": "#ff6f61",
+
+	"buttonBgColor": "#ff6f61",
+	"buttonHoverColor": "#ff5a4a",
+
+	"inputBgColor": "#444",
+	"inputBorderColor": "#666",
+	"inputTextColor": "#fff",
+
+	"listItemBgColor": "#444",
+	"listItemHoverColor": "#555",
+
+	"statusInfoColor": "#2196f3",
+	"statusRedirectColor": "#ffeb3b",
+	"statusSuccessColor": "#4caf50",
+	"statusClientErrorColor": "#ff9800",
+	"statusServerErrorColor": "#f44336",
+	"statusSpecialInfoColor": "#03a9f4",
+	"statusSpecialRedirectColor": "#ffc107"
 }
