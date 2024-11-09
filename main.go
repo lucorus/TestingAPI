@@ -215,11 +215,11 @@ func main() {
 		return
 	}
 
-	// Создаем новый контент для JS файла
+	// Создаем новую настройку для JS файла
 	newContent := CreateJSContent(config)
 
 	// Удаляем прошлые константы
-	err = ReplaceConfigData(PathToJsFile, newContent, 19)
+	err = ReplaceConfigData(PathToJsFile, newContent, 25)
 	if err != nil {
 		fmt.Println("Ошибка при обновлении конфигурации", err)
 		return

@@ -1,29 +1,57 @@
-const statusInfoColor = '#2196f3';
-const statusRedirectColor = '#ffeb3b';
-const statusSpecialInfoColor = '#03a9f4';
-const textColor = '#f1f1f1';
-const headerColor = '#ff6f61';
-const inputBgColor = '#444';
+const statusSuccessColor = '#4caf50';
+const statusClientErrorColor = '#ff9800';
+const statusSpecialRedirectColor = '#ffc107';
+const historySectionBgColor = '#333';
+const detailPreColor = '#333';
+const liBgColor = '#444';
+const buttonBgColor = '#ff6f61';
 const inputTextColor = '#fff';
 const domain = 'localhost';
-const buttonHoverColor = '#ff5a4a';
+const detailBgColor = '#222';
+const textColor = '#f1f1f1';
+const inputBgColor = '#444';
 const inputBorderColor = '#666';
-const statusClientErrorColor = '#ff9800';
-const port = '8081';
-const buttonBgColor = '#ff6f61';
-const listItemHoverColor = '#555';
-const statusServerErrorColor = '#f44336';
-const statusSpecialRedirectColor = '#ffc107';
-const bodyBgColor = '#2c2c2c';
+const statusSpecialInfoColor = '#03a9f4';
+const headerColor = '#ff6f61';
+const buttonHoverColor = '#ff5a4a';
 const listItemBgColor = '#444';
-const statusSuccessColor = '#4caf50';
-
-
+const statusRedirectColor = '#ffeb3b';
+const statusServerErrorColor = '#f44336';
+const port = '8080';
+const bodyBgColor = '#2c2c2c';
+const liHoverBgColor = '#555';
+const listItemHoverColor = '#555';
+const statusInfoColor = '#2196f3';
 
 function changeColors() {
 	// Изменяем цвета элементов на странице
 	document.body.style.backgroundColor = bodyBgColor
 	document.body.style.color = textColor
+
+	const historySection = document.querySelector('.history-section')
+	historySection.style.backgroundColor = historySectionBgColor
+
+	// Применяем цвета, если элементы будут добавлены позже
+	const styleElement = document.createElement('style')
+	styleElement.innerHTML = `
+        .details {
+            background-color: ${detailBgColor};
+        }
+        .details pre {
+            background-color: ${detailPreColor};
+        }
+				li {
+					background-color: ${liBgColor};
+					color: ${textColor}
+				}
+				li:hover {
+					background-color: ${liHoverBgColor};
+				}
+				pre {
+				background-color: ${inputBgColor};
+				}
+    `
+	document.head.appendChild(styleElement)
 
 	const headers = document.querySelectorAll('h1, h2')
 	headers.forEach(header => {

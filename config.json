@@ -3,6 +3,11 @@
 	"domain": "localhost",
 
 	"bodyBgColor": "#2c2c2c",
+	"historySectionBgColor": "#333",
+	"detailBgColor": "#222",
+	"detailPreColor": "#333",
+	"liBgColor": "#444",
+	"liHoverBgColor": "#555",
 
 	"textColor": "#f1f1f1",
 	"headerColor": "#ff6f61",
