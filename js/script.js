@@ -1,31 +1,31 @@
+const domain = 'localhost';
+const inputBgColor = '#444';
 const statusSuccessColor = '#4caf50';
-const statusClientErrorColor = '#ff9800';
+const statusSpecialInfoColor = '#03a9f4';
 const statusSpecialRedirectColor = '#ffc107';
-const historySectionBgColor = '#333';
+const port = '8080';
 const detailPreColor = '#333';
 const liBgColor = '#444';
-const buttonBgColor = '#ff6f61';
 const inputTextColor = '#fff';
-const domain = 'localhost';
-const detailBgColor = '#222';
-const textColor = '#f1f1f1';
-const inputBgColor = '#444';
-const inputBorderColor = '#666';
-const statusSpecialInfoColor = '#03a9f4';
-const headerColor = '#ff6f61';
-const buttonHoverColor = '#ff5a4a';
 const listItemBgColor = '#444';
-const statusRedirectColor = '#ffeb3b';
-const statusServerErrorColor = '#f44336';
-const port = '8080';
-const bodyBgColor = '#2c2c2c';
-const liHoverBgColor = '#555';
+const buttonHoverColor = '#ff5a4a';
 const listItemHoverColor = '#555';
 const statusInfoColor = '#2196f3';
+const statusRedirectColor = '#ffeb3b';
+const statusClientErrorColor = '#ff9800';
+const headerColor = '#ff6f61';
+const buttonBgColor = '#ff6f61';
+const inputBorderColor = '#666';
+const bodyBgColor = '#2c2c2c';
+const historySectionBgColor = '#333';
+const detailBgColor = '#222';
+const liHoverBgColor = '#555';
+const textColor = '#f1f1f1';
+const statusServerErrorColor = '#f44336';
 
 function changeColors() {
 	// Изменяем цвета элементов на странице
-	document.body.style.backgroundColor = bodyBgColor
+	document.body.style.background = bodyBgColor
 	document.body.style.color = textColor
 
 	const historySection = document.querySelector('.history-section')

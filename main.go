@@ -205,8 +205,9 @@ func main() {
 
   port, domain, err := GetData(PathToConfigFile)
   if err != nil {
-    fmt.Println("Error in getting config info: ", err.Error())
-    return
+    fmt.Println("Ошибка при получении данных конфигурации: port, host. Будут использован localhost:8081")
+    port = "8081"
+    domain = "localhost"
   }
 
   config, err := GetConfigData("config.json")

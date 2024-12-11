@@ -1,5 +1,5 @@
 {
-	"port": "8081",
+	"port": "8080",
 	"domain": "localhost",
 
 	"bodyBgColor": "#2c2c2c",
@@ -8,17 +8,13 @@
 	"detailPreColor": "#333",
 	"liBgColor": "#444",
 	"liHoverBgColor": "#555",
-
 	"textColor": "#f1f1f1",
 	"headerColor": "#ff6f61",
-
 	"buttonBgColor": "#ff6f61",
 	"buttonHoverColor": "#ff5a4a",
-
 	"inputBgColor": "#444",
 	"inputBorderColor": "#666",
 	"inputTextColor": "#fff",
-
 	"listItemBgColor": "#444",
 	"listItemHoverColor": "#555",
 
