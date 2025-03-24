@@ -1,27 +1,27 @@
-const domain = 'localhost';
-const inputBgColor = '#444';
+const detailBgColor = '#222';
+const statusInfoColor = '#2196f3';
 const statusSuccessColor = '#4caf50';
 const statusSpecialInfoColor = '#03a9f4';
-const statusSpecialRedirectColor = '#ffc107';
-const port = '8080';
-const detailPreColor = '#333';
-const liBgColor = '#444';
-const inputTextColor = '#fff';
-const listItemBgColor = '#444';
-const buttonHoverColor = '#ff5a4a';
-const listItemHoverColor = '#555';
-const statusInfoColor = '#2196f3';
-const statusRedirectColor = '#ffeb3b';
-const statusClientErrorColor = '#ff9800';
-const headerColor = '#ff6f61';
-const buttonBgColor = '#ff6f61';
-const inputBorderColor = '#666';
-const bodyBgColor = '#2c2c2c';
-const historySectionBgColor = '#333';
-const detailBgColor = '#222';
 const liHoverBgColor = '#555';
 const textColor = '#f1f1f1';
+const inputBgColor = '#444';
+const inputTextColor = '#fff';
+const listItemHoverColor = '#555';
+const statusRedirectColor = '#ffeb3b';
+const port = '8081';
+const domain = 'localhost';
+const bodyBgColor = '#2c2c2c';
+const headerColor = '#ff6f61';
+const buttonBgColor = '#ff6f61';
+const buttonHoverColor = '#ff5a4a';
+const historySectionBgColor = '#333';
+const detailPreColor = '#333';
+const liBgColor = '#444';
+const inputBorderColor = '#666';
+const listItemBgColor = '#444';
+const statusClientErrorColor = '#ff9800';
 const statusServerErrorColor = '#f44336';
+const statusSpecialRedirectColor = '#ffc107';
 
 function changeColors() {
 	// Изменяем цвета элементов на странице
@@ -480,7 +480,7 @@ function formatJson(obj, indent = '') {
 		}
 		result += `${indent}}`
 	} else {
-		result = obj.toString()
+		result = removeEscapesFromUrls(decodeUnicode(obj.toString()))
 	}
 	return result
 }
@@ -529,7 +529,7 @@ function addToHistory(payload, response) {
 }
 
 function makeLinksClickable(text) {
-	const urlRegex = /(https?:\/\/[^\s]+)/g
+	const urlRegex = /(https?:\/\/[^\s"'<>()]+)/g
 	return text.replace(urlRegex, url => {
 		return `<a href="${url}" target="_blank">${url}</a>`
 	})
@@ -545,4 +545,26 @@ function convertToJsonString(input) {
 	} catch (e) {
 		return input
 	}
+}
+
+function decodeUnicode(str) {
+	return str.replace(/\\u[\dA-Fa-f]{4}|\\"|\\'|\\\\/g, match => {
+		if (match.startsWith('\\u')) {
+			return String.fromCharCode(parseInt(match.replace('\\u', ''), 16))
+		} else if (match === '\\"') {
+			return '"'
+		} else if (match === "\\'") {
+			return "'"
+		} else if (match === '\\\\') {
+			return '\\'
+		}
+		return match
+	})
+}
+
+function removeEscapesFromUrls(text) {
+	const urlRegex = /(https?:\\\/\\\/[^\s"'<>()]+)/g
+	return text.replace(urlRegex, url => {
+		return url.replace(/\\\//g, '/')
+	})
 }
