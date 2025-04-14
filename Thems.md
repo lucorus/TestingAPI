@@ -115,36 +115,3 @@
 	"listItemHoverColor": "#916bbf"
 }
 ```
-
----
-
-### Эмо тема:
-
-![](https://i.ibb.co/KDJXzSW/emo-theme.png)
-
-**config:**
-
-```json
-{
-	"bodyBgColor": "#282828",
-	"historySectionBgColor": "#3c3c3c",
-	"detailBgColor": "#4f4f4f",
-	"detailPreColor": "#626262",
-	"liBgColor": "#2e2e2e",
-	"liHoverBgColor": "#3a3a3a",
-	"liBorderColor": "#ff69b4",
-	"liHoverBorderColor": "#ff1493",
-	"liTextColor": "#ffffff",
-	"liLinkColor": "#ff69b4",
-	"liLinkHoverColor": "#ff1493",
-	"textColor": "#ffffff",
-	"headerColor": "#ff69b4",
-	"buttonBgColor": "#ff69b4",
-	"buttonHoverColor": "#ff1493",
-	"inputBgColor": "#3c3c3c",
-	"inputBorderColor": "#ff69b4",
-	"inputTextColor": "#ffffff",
-	"listItemBgColor": "#2e2e2e",
-	"listItemHoverColor": "#3a3a3a"
-}
-```
