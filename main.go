@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/rs/cors"
 )
 
 const (
@@ -190,33 +192,49 @@ func ReplaceConfigData(filename string, newLines string, n int) error {
 }
 
 func main() {
-	http.HandleFunc("/", mainPageHandler)
-	http.HandleFunc("/send_request/", sendRequestHandler)
-	http.Handle(PathToJsDir, http.StripPrefix(PathToJsDir, http.FileServer(http.Dir("./js"))))
-	http.Handle(PathToCssDir, http.StripPrefix(PathToCssDir, http.FileServer(http.Dir("./css"))))
+  mux := http.NewServeMux()
+    
+  mux.HandleFunc("/", mainPageHandler)
+  mux.HandleFunc("/send_request/", sendRequestHandler)
+  mux.Handle(PathToJsDir, http.StripPrefix(PathToJsDir, http.FileServer(http.Dir("./js"))))
+  mux.Handle(PathToCssDir, http.StripPrefix(PathToCssDir, http.FileServer(http.Dir("./css"))))
 
-	port, domain, err := GetData(PathToConfigFile)
-	if err != nil {
-		fmt.Println("Ошибка при получении данных конфигурации: port, host. Будут использован localhost:8081")
-		port = "8081"
-		domain = "localhost"
-	}
+  // Настраиваем CORS
+  c := cors.New(cors.Options{
+    AllowedOrigins:   []string{"*"}, // Разрешаем все домены
+    AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+    AllowedHeaders:   []string{"Content-Type", "Authorization"},
+    AllowCredentials: true,
+    Debug: true, // Выводит отладочную информацию в консоль
+  })
 
-	config, err := GetConfigData(PathToConfigFile)
-	if err != nil {
-		fmt.Println("Ошибка при получении данных конфигурации:", err)
-		return
-	}
+  handler := c.Handler(mux)
 
-	newContent := CreateJSContent(config)
+  // Получаем параметры сервера из конфига
+  port, domain, err := GetData(PathToConfigFile)
+  if err != nil {
+      fmt.Println("Ошибка при получении данных конфигурации: port, host. Будут использован localhost:8081")
+      port = "8081"
+      domain = "localhost"
+  }
 
-	err = ReplaceConfigData(PathToJsFile, newContent, 25)
-	if err != nil {
-		fmt.Println("Ошибка при обновлении конфигурации:", err)
-		return
-	}
+  // Обновляем JS конфиг
+  config, err := GetConfigData(PathToConfigFile)
+  if err != nil {
+    fmt.Println("Ошибка при получении данных конфигурации:", err)
+    return
+  }
 
-	fmt.Println("Конфигурация успешно обновлена!")
-	fmt.Println("Server started at " + domain + ":" + port)
-	http.ListenAndServe(domain+":"+port, nil)
+  newContent := CreateJSContent(config)
+  err = ReplaceConfigData(PathToJsFile, newContent, 25)
+  if err != nil {
+    fmt.Println("Ошибка при обновлении конфигурации:", err)
+    return
+  }
+
+  fmt.Println("Конфигурация успешно обновлена!")
+  fmt.Println("Server started at " + domain + ":" + port)
+    
+  // Запускаем сервер с CORS middleware
+  http.ListenAndServe(domain+":"+port, handler)
 }
